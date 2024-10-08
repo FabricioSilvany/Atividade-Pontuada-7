@@ -3,13 +3,40 @@ import os
 # Função sem retorno.
 def logoSenai():
     os.system("cls || clear")
-    print("=== SENAI === ")
+    print(" === SENAI === ")
+
 
 # Definindo listas vazias para armazenar os dados dos usuários
 nomes = []
+sobrenomes = []
 idades = []
 alturas = []
 pesos = []
+lista_imc = []
+categoria_peso = []
+
+#Calculando IMC
+def calculando_imc(pesos, alturas):
+    imcs = pesos / (alturas*alturas)
+
+    return imcs
+
+#Definido qual a categoria de peso do usuário
+def definindo_categorias(imc):
+        if imc < 18.5:
+            resultado = "Abaixo do peso"
+        elif imc >= 18.5 and imc < 25:
+            resultado = "Peso normal"
+        elif imc >= 25 and imc < 30:
+            resultado = "Sobrepeso"
+        elif imc >= 30 and imc < 35:
+            resultado = "Obesidade grau 1"
+        elif imc >= 35 and imc < 40:
+            resultado = "Obesidade grau 2"
+        elif imc >= 40:
+            resultado = "Obesidade grau 3 (mórbida)"
+
+        return resultado
 
 # Solicitando os dados dos usuários em um loop
 while True:
@@ -20,23 +47,31 @@ while True:
     if nome.lower() == 'sair':
         break
     
+    sobrenome = input("Digite o sobrenome do usuário: ")
     idade = int(input("Digite a idade do usuário: "))
     altura = float(input("Digite a altura do usuário (em metros): "))
     peso = float(input("Digite o peso do usuário (em quilogramas): "))
     
     # Adicionando os dados às listas
     nomes.append(nome)
+    sobrenomes.append(sobrenome)
     idades.append(idade)
     alturas.append(altura)
     pesos.append(peso)
+    imc = calculando_imc(peso, altura)
+    lista_imc.append(imc)
+    categoria = definindo_categorias(imc)
+    categoria_peso.append(categoria)
+
 
 # Exibindo os dados armazenados
 logoSenai()
 print("\nDados dos usuários:")
 for i in range(len(nomes)):
-    print(f"Usuário {i+1}:")
-    print("Nome:", nomes[i])
+    print(f"\nUsuário {i+1}:")
+    print("Nome completo:", nomes[i] , sobrenomes[i])
     print("Idade:", idades[i])
     print("Altura:", alturas[i], "metros")
     print("Peso:", pesos[i], "quilogramas")
-    print()
+    print("IMC:", lista_imc[i])
+    print("Estado atual de peso:", categoria_peso[i])
